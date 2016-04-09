@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+
+{% block title %} LOGIN {% endblock %}
+
+{% block body %}
+<form method="post">
+    {{ form.hidden_tag() }}
+    <table>
+        <tr>
+            <td>{{ form.username.label }}:</td>
+            <td>{{ form.username(id="username") }}</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>{{ form.password.label }}:</td>
+            <td>{{ form.password(id="password") }}</td>
+        </tr>
+    </table>
+    {{ form.submit }}
+</form>
+{% endblock %}
