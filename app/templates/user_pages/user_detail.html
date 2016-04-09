@@ -19,19 +19,19 @@
         </tr>
         <tr>
             <td><label>Hometown: </label></td>
-            <td><p>{{ user.hometown }}</p></td>
+            <td><p>{{ user_detail.hometown }}</p></td>
         </tr>
         <tr>
             <td><label>Caree: </label></td>
-            <td><p>{{ user.caree }}</p></td>
+            <td><p>{{ user_detail.caree }}</p></td>
         </tr>
         <tr>
             <td><label>Avartar: </label></td>
-            <td><p>{{ user.avartar }}</p></td>
+            <td><img src="{{ user_detail.avatar }}"/></td>
         </tr>
         <tr>
             <td><label>JoinTime: </label></td>
-            <td><p>{{ user.join_time }}</p></td>
+            <td><p>{{ user_detail.join_time }}</p></td>
         </tr>
     </table>
 </div>
