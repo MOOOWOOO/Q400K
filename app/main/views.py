@@ -54,8 +54,7 @@ def regist():
         user = User(email=form.email.data,
                     username=form.username.data,
                     password=form.password.data)
-        db.session.add(user)
-        db.session.commit()
+        user.generate()
         return redirect(url_for('main.login'))
     return render_template('regist.html', form=form)
 

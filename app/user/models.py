@@ -3,13 +3,14 @@
 from datetime import datetime
 
 from app import db, login_manager
+from app.util.models import CRUDMixin
 from flask.ext.login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 __author__ = 'Jux.Liu'
 
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin, CRUDMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(20), unique=True, index=True, nullable=False)
@@ -35,6 +36,8 @@ class User(db.Model, UserMixin):
 
     def generate(self):
         self.save()
+        ud = UserDetail(id=self.id)
+        ud.save()
         return self
 
     @staticmethod
@@ -50,7 +53,7 @@ class User(db.Model, UserMixin):
 DEFAULT_AVA_URL = '/static/images/default_avatar.jpg'
 
 
-class UserDetail(db.Model):
+class UserDetail(db.Model, CRUDMixin):
     __tablename__ = 'user_details'
     id = db.Column(db.Integer, primary_key=True)
     career = db.Column(db.Integer, nullable=True, unique=False)
@@ -61,7 +64,3 @@ class UserDetail(db.Model):
 
     def __repr__(self):
         return '<UserDetail #{0}: {1} Joined.>'.format(self.id, self.join_time)
-
-    def generate(self):
-        self.save()
-        return self
