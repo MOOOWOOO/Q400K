@@ -1,6 +1,7 @@
 # coding: utf-8
 from app import create_app, db
 from app.auth.models import Role
+from app.journal.models import Journal
 from app.user.models import User
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.script import Server, Shell, Manager
@@ -14,7 +15,7 @@ migrate = Migrate(app, db)
 
 
 def make_shell_context():
-    return dict(app=app, db=db, User=User, Role=Role)
+    return dict(app=app, db=db, User=User, Role=Role, Journal=Journal)
 
 
 manager.add_command("shell", Shell(make_context=make_shell_context))

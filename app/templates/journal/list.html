@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+
+{% block title %} Journals Page - {{ page }} {% endblock %}
+
+{% block body %}
+
+    <table>
+        <thead>
+        <tr>
+            <td>id</td>
+            <td>datetime</td>
+            <td>level</td>
+            <td>title</td>
+            <td>detail</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for record in journals %}
+            <tr>
+                <td>{{ record.id }}</td>
+                <td>{{ record.datetime }}</td>
+                <td>{{ record.level }}</td>
+                <td>{{ record.title }}</td>
+                <td>{{ record.detail }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
