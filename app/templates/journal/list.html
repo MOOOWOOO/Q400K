@@ -1,10 +1,10 @@
 {% extends "index.html" %}
 
-{% block title %} Journals Page - {{ page }} {% endblock %}
+{% block title %} Journals Page - {{ number }} {% endblock %}
 
 {% block body %}
 
-    <table>
+    <table border="1">
         <thead>
         <tr>
             <td>id</td>
@@ -26,5 +26,8 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {% import  'utils/pagenation.html' as p %}
+    {{ p.pager('journal.list',number=number,total=total) }}
 
 {% endblock %}
