@@ -8,8 +8,9 @@
     {% endblock %}
     {% block scripts %}
         <script type="application/javascript" src="{{ url_for("static", filename="thirdLib/jquery.js") }}"></script>
+        <script type="application/javascript" src="{{ url_for("static", filename="js/util/ajax_functions.js") }}"></script>
         <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="thirdLib/bootstrap/css/bootstrap.min.css") }}">
-        <script type="application/javascript" src="{{ url_for("static", filename="js/app/fa.js") }}"></script>
+        <script type="application/javascript" src="{{ url_for("static", filename="js/util/fa.js") }}"></script>
 
     {% endblock %}
 </head>
