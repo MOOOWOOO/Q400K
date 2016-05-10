@@ -27,7 +27,7 @@ def favicon():
     :param: null
     :return:
     """
-    return send_from_directory('static/images', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory('static/images', 'favicon.ico', mimetype='image/x-icon')
 
 
 @main.route('/login/', methods=['GET', 'POST'])

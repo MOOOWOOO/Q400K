@@ -6,8 +6,8 @@
     {{ super() }}
 
     {% if current_user.is_authenticated %}
-        <a href="{{ url_for('user.user_main', user_id=current_user.id) }}">My HomePage</a>
-        <a href="{{ url_for('journal.list', page=1) }}">Journal List</a>
+        <a href="{{ url_for("user.user_main", user_id=current_user.id) }}">My HomePage</a>
+        <a href="{{ url_for("journal.list", page=1) }}">Journal List</a>
     {% endif %}
 
 {% endblock %}
