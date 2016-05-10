@@ -14,6 +14,9 @@ function query(method, url, param_list, successCallback, errorCallback) {
             data: JSON.stringify(param_list),
             dataType: "json",
             success: function (data) {
+                if (typeof data == "string"){
+                    data=JSON.parse(data);
+                }
                 successCallback(data);
             },
             error: function (data) {

@@ -13,6 +13,7 @@
                 <td>level</td>
                 <td>title</td>
                 <td>detail</td>
+                <td>action</td>
             </tr>
             </thead>
             <tbody id="journal_tbody">
@@ -23,6 +24,17 @@
                     <td>{{ record.title }}</td>
                     <td>{{ record.detail }}</td>
                     <td>{{ record.datetime }}</td>
+                    <td>
+                        <a style="display:block;cursor:hand" href="#">
+                            <span class="fa fa-pencil-square-o"></span>
+                        </a>
+                        <a style="display:block;cursor:hand" href="#">
+                            <span class="fa fa-trash" data-target="{{ record.id }}"></span>
+                        </a>
+                        <a style="display: none;cursor:hand" href="#">
+                            <span class="fa fa-floppy-o" data-target="{{ record.id }}"></span>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             <tr id="new_journal_tr">

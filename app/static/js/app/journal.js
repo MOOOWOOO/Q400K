@@ -45,5 +45,25 @@ $(document).ready(function () {
             function (data) {
                 // todo
             })
-    })
+    });
+    $(".fa-pencil-square-o").click(function () {
+        $(this).data('target');
+    });
+    $(".fa-floppy-o").click(function () {
+        $(this).data('target');
+    });
+    $(".fa-trash").click(function () {
+        var url = "/journal/delete/",
+            id = $(this).data('target'),
+            param_list = {id: id};
+        query("post", url, param_list, function (data) {
+                if (data['result'] == 'ok') {
+                    $("#" + id).detach();
+                } else {
+                    // todo: 提示删除失败
+                }
+            },
+            function (data) {
+            });
+    });
 });

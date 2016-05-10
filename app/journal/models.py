@@ -14,6 +14,7 @@ class Journal(db.Model, CRUDMixin):
     level = db.Column(db.Integer, nullable=False, unique=False, default=0)
     title = db.Column(db.String, nullable=False, unique=False)
     detail = db.Column(db.Text, nullable=False, unique=False)
+    visable = db.Column(db.Boolean, nullable=False, default=True)
 
     def __repr__(self):
         return '<Journal #{0}: Level-{1} DateTime: {2}>'.format(self.id, self.level, self.datetime)
