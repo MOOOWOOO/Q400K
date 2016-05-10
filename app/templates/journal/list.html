@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container">
         {% include "journal/search.html" %}
-        <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+        <table class="table table-bordered table-hover table-condensed table-responsive">
             <thead>
             <tr>
                 <td>id</td>
@@ -17,7 +17,7 @@
             </thead>
             <tbody id="journal_tbody">
             {% for record in journals %}
-                <tr id="{{ record.id }}">
+                <tr id="{{ record.id }}" class="{{ ["danger", "warning", "success", "info", "active"][record.level] }}">
                     <td>{{ record.id }}</td>
                     <td>{{ record.level }}</td>
                     <td>{{ record.title }}</td>
