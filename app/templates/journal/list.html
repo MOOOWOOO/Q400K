@@ -3,31 +3,37 @@
 {% block title %} Journals Page - {{ number }} {% endblock %}
 
 {% block body %}
-
-    <table border="1">
-        <thead>
-        <tr>
-            <td>id</td>
-            <td>datetime</td>
-            <td>level</td>
-            <td>title</td>
-            <td>detail</td>
-        </tr>
-        </thead>
-        <tbody>
-        {% for record in journals %}
+    <div class="container">
+        {% include "utils/form_input.html" %}
+        <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+            <thead>
             <tr>
-                <td>{{ record.id }}</td>
-                <td>{{ record.datetime }}</td>
-                <td>{{ record.level }}</td>
-                <td>{{ record.title }}</td>
-                <td>{{ record.detail }}</td>
+                <td>id</td>
+                <td>datetime</td>
+                <td>level</td>
+                <td>title</td>
+                <td>detail</td>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody id='journal_tbody'>
+            {% for record in journals %}
+                <tr>
+                    <td>{{ record.id }}</td>
+                    <td>{{ record.datetime }}</td>
+                    <td>{{ record.level }}</td>
+                    <td>{{ record.title }}</td>
+                    <td>{{ record.detail }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    {% import  'utils/pagenation.html' as p %}
-    {{ p.pager('journal.list',number=number,total=total) }}
+        {% import  'utils/pagenation.html' as p %}
+        {{ p.pager('journal.list',number=number,total=total) }}
+    </div>
+{% endblock %}
 
+{% block scripts %}
+    {{ super() }}
+    <script type="application/javascript" src="{{ url_for('static', filename='js/app/form_input.js') }}"></script>
 {% endblock %}
