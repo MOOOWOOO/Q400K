@@ -6,13 +6,14 @@ from app import db
 
 __author__ = 'Jux.Liu'
 
-class SerializeMixin(object):
 
+class SerializeMixin(object):
     'Mixin for retrieving public fields of model in json-compatible format'
     __public__ = None
     __exclude__ = None
 
-    def to_json(self, exclude=None, include=None, only=None, with_entities=None, join=None, parent=True, convert=True, **kwargs):
+    def to_json(self, exclude=None, include=None, only=None, with_entities=None, join=None, parent=True, convert=True,
+                **kwargs):
         """
         Returns model's PUBLIC data for jsonify
             exclude: 在转化时指定需要排除的字段列表
@@ -89,7 +90,8 @@ class SerializeMixin(object):
                 data.update(i)
         return data
 
-    def to_dict(self, exclude=None, include=None, only=None, with_entities=None, join=None, parent=True, convert=True, **kwargs):
+    def to_dict(self, exclude=None, include=None, only=None, with_entities=None, join=None, parent=True, convert=True,
+                **kwargs):
         return self.to_json(exclude, include, only, with_entities, join, parent, convert, to_dict=True, **kwargs)
 
     @classmethod
@@ -120,7 +122,6 @@ class SerializeMixin(object):
 
 
 class CRUDMixin(SerializeMixin):
-
     def __repr__(self):
         return "<{}>".format(self.__class__.__name__)
 
@@ -130,20 +131,19 @@ class CRUDMixin(SerializeMixin):
         try:
             db.session.commit()
             return self
-        except Exception, e:
+        except Exception as e:
             db.session.rollback()
             raise e
 
     def delete(self, real_del=True):
         """Delete the object from the database."""
         if not real_del:
-            self.deleted = True
+            self.visable = False
             db.session.add(self)
         else:
             db.session.delete(self)
         try:
             db.session.commit()
-        except Exception, e:
+        except Exception as e:
             db.session.rollback()
             raise e
-
