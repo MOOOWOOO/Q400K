@@ -12,6 +12,14 @@ from . import main
 __author__ = 'Jux.Liu'
 
 
+def verify_user(username, password):
+    u = User.query.filter_by(username=username).first()
+    if u.verify_password(password=password):
+        return u
+    else:
+        return None
+
+
 @main.route('/')
 @main.route('/index')
 def index():
@@ -38,8 +46,8 @@ def login():
     if form.validate_on_submit():
         username = request.form.get('username')
         password = request.form.get('password')
-        u = User.query.filter_by(username=username).first()
-        if u.verify_password(password=password):
+        u = verify_user(username, password)
+        if u:
             login_user(u)
             return redirect(request.args.get('next') or url_for('main.index', user=u))
         else:
