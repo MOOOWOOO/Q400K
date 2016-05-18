@@ -1,4 +1,5 @@
 # coding: utf-8
+import json
 from datetime import datetime
 from math import ceil
 
@@ -39,8 +40,17 @@ def new_record():
                           title=param['title'],
                           detail=param['detail'],
                           datetime=datetime.now())
-    new_journal.save()
-    return jsonify({'result': 'ok', 'id': new_journal.id})
+    if new_journal.save():
+        new_journal={
+            'id': str(new_journal.id),
+            'level': str(new_journal.level),
+            'detail': str(new_journal.detail),
+            'title': str(new_journal.title),
+            'datetime':str(new_journal.datetime)
+        }
+        return jsonify({'result': 'ok', 'journal': new_journal})
+    else:
+        return jsonify({})
 
 
 @journal.route('/delete/', methods=['POST'])

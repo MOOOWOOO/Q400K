@@ -1,6 +1,33 @@
 /**
  * Created by jux on 16-5-10.
  */
+function tr_class(journal) {
+    // todo: 怎么更优雅的完成组装？模板引擎？
+    this.id=journal.id;
+    this.level=journal.level;
+    this.title=journal.title;
+    this.detail=journal.detail;
+    this.datetime=journal.datetime;
+    this.html='<tr id="'+this.id+'" class="'+ ["danger", "warning", "success", "info", "active"][this.level] +'">'+
+                    '<td>'+this.id+'</td>'+
+                    '<td>'+this.level+'</td>'+
+                    '<td>'+this.title+'</td>'+
+                    '<td>'+this.detail+'</td>'+
+                    '<td>'+this.datetime+'</td>'+
+                    '<td>'+
+                        '<a style="display:block;cursor:hand" href="#">'+
+                            '<span class="fa fa-pencil-square-o"></span>'+
+                        '</a>'+
+                        '<a style="display:block;cursor:hand" href="#">'+
+                            '<span class="fa fa-trash" data-target="'+this.id+'"></span>'+
+                        '</a>'+
+                        '<a style="display: none;cursor:hand" href="#">'+
+                            '<span class="fa fa-floppy-o" data-target="'+this.id+'"></span>'+
+                        '</a>'+
+                    '</td>'+
+                '</tr>';
+}
+
 $(document).ready(function () {
     $("#search").click(function () {
         var param_list = {},
@@ -38,9 +65,9 @@ $(document).ready(function () {
                 level: 0
             };
         query("post", url, param_list, function (data) {
-                console.log(data);
                 $("#cancel_journal").click();
-                // todo
+                h=new tr_class(data['journal']);
+                $("#journal_tbody").prepend(h.html);
             },
             function (data) {
                 // todo
@@ -60,7 +87,7 @@ $(document).ready(function () {
                 if (data['result'] == 'ok') {
                     $("#" + id).detach();
                 } else {
-                    // todo: 提示删除失败
+                    alert('delete fail');
                 }
             },
             function (data) {
