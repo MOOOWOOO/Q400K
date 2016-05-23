@@ -1,4 +1,6 @@
 # coding: utf-8
+from getpass import getuser
+
 from os import environ
 from os.path import abspath, dirname
 from . import blueprint
@@ -14,6 +16,7 @@ class Config():
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     WTF_CSRF_ENABLED = True
     WTF_CSRF_METHODS = ['POST', 'PUT', 'DELETE', 'PATCH']
+    UPLOAD_PATH = r'/home/pi/Documents/demo/' if getuser() == 'pi' else r'/home/jux/Documents/Q400K/'
 
     @staticmethod
     def init_app(app):

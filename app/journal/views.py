@@ -1,14 +1,17 @@
 # coding: utf-8
-import json
 from datetime import datetime
 from math import ceil
 
+import os
 from app import db
+from app.config import config
 from app.main.decorator import login_required_
 from app.main.views import verify_user
+from app.util.file_manager import upload
 from flask import render_template, request, jsonify, url_for, redirect
 from flask.ext.login import current_user
 from sqlalchemy import desc
+from werkzeug.utils import secure_filename
 from . import journal
 from .models import Journal
 
@@ -41,12 +44,12 @@ def new_record():
                           detail=param['detail'],
                           datetime=datetime.now())
     if new_journal.save():
-        new_journal={
+        new_journal = {
             'id': str(new_journal.id),
             'level': str(new_journal.level),
             'detail': str(new_journal.detail),
             'title': str(new_journal.title),
-            'datetime':str(new_journal.datetime)
+            'datetime': str(new_journal.datetime)
         }
         return jsonify({'result': 'ok', 'journal': new_journal})
     else:
@@ -73,3 +76,22 @@ def reset(password):
         db.session.add_all(journal_list)
         db.session.commit()
         return redirect(url_for('.list', page=1))
+
+
+
+@journal.route('/import/', methods=['GET', 'POST'])
+@login_required_
+def import_file():
+    if request.method == 'GET':
+        return render_template('journal/import.html')
+    else:
+        file_size=upload(request.files['file'])
+        if file_size == 0:
+            pass
+        else:
+            if float(file_size / 1000000) > 100:
+                # todo: import backround
+                pass
+            else:
+                # todo: import and return
+                pass
