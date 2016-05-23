@@ -5,6 +5,8 @@
 {% block body %}
     <div class="container">
         {% include "journal/search.html" %}
+        {% import  "utils/pagenation.html" as p %}
+        {{ p.pager("journal.list",number=number,total=total) }}
         <table class="table table-bordered table-hover table-condensed table-responsive">
             <thead>
             <tr>
@@ -74,7 +76,6 @@
             </tbody>
         </table>
 
-        {% import  "utils/pagenation.html" as p %}
         {{ p.pager("journal.list",number=number,total=total) }}
     </div>
 {% endblock %}
