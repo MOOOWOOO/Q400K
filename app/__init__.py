@@ -1,6 +1,8 @@
 # coding: utf-8
 
 from flask import Flask
+
+from flask.ext.bootstrap import Bootstrap
 from flask.ext.login import LoginManager
 from flask.ext.sqlalchemy import SQLAlchemy
 
@@ -8,6 +10,7 @@ __author__ = 'Jux.Liu'
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+bootstrap = Bootstrap()
 
 
 def create_app(config_name):
@@ -19,5 +22,6 @@ def create_app(config_name):
 
     db.init_app(app=app)
     login_manager.init_app(app=app)
+    bootstrap.init_app(app=app)
 
     return app

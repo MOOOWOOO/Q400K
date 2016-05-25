@@ -2,7 +2,7 @@
 from app import db
 from app.user.models import User
 from flask.ext.wtf import Form
-from wtforms import StringField, SubmitField, PasswordField, ValidationError
+from wtforms import StringField, SubmitField, PasswordField, ValidationError, BooleanField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 __author__ = 'Jux.Liu'
@@ -11,6 +11,7 @@ __author__ = 'Jux.Liu'
 class LoginForm(Form):
     username = StringField('username', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired()])
+    remember = BooleanField('remember')
     submit = SubmitField('Login')
 
 

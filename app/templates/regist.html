@@ -1,28 +1,8 @@
 {% extends "index.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %} REGIST {% endblock %}
 
 {% block body %}
-<form method="post">
-    {{ form.hidden_tag() }}
-    <table>
-        <tr>
-            <td>{{ form.email.label }}:</td>
-            <td>{{ form.email(id="email") }}</td>
-        </tr>
-        <tr>
-            <td>{{ form.username.label }}:</td>
-            <td>{{ form.username(id="username") }}</td>
-        </tr>
-        <tr>
-            <td>{{ form.password.label }}:</td>
-            <td>{{ form.password(id="password") }}</td>
-        </tr>
-        <tr>
-            <td>{{ form.password2.label }}:</td>
-            <td>{{ form.password2(id="password2") }}</td>
-        </tr>
-    </table>
-    {{ form.submit }}
-</form>
+    {{ wtf.quick_form(form) }}
 {% endblock %}
