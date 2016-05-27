@@ -1,4 +1,5 @@
 # coding: utf-8
+from datetime import timedelta
 from getpass import getuser
 
 from os import environ
@@ -17,6 +18,7 @@ class Config():
     WTF_CSRF_ENABLED = True
     WTF_CSRF_METHODS = ['POST', 'PUT', 'DELETE', 'PATCH']
     UPLOAD_PATH = r'/home/pi/Documents/demo/' if getuser() == 'pi' else r'/home/jux/Documents/Q400K/'
+    PERMANENT_SESSION_LIFETIME = timedelta(minutes=1)
 
     @staticmethod
     def init_app(app):
@@ -44,8 +46,8 @@ class TestingConfig(Config):
 
 
 config = {
-    'default': DevelopmentConfig,
-    'testing': TestingConfig,
+    'default'   : DevelopmentConfig,
+    'testing'   : TestingConfig,
     'production': ProductionConfig,
-    'develop': DevelopmentConfig
+    'develop'   : DevelopmentConfig
 }
