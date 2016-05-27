@@ -1,11 +1,12 @@
 # coding: utf-8
 import json
 
+from flask import render_template, request, redirect, url_for, send_from_directory
+
 from app import db
 from app.main.decorator import login_required_
 from app.main.models import LoginForm, RegistForm, ChangePasswordForm
 from app.user.models import User
-from flask import render_template, request, redirect, url_for, send_from_directory
 from flask.ext.login import current_user, logout_user, login_user
 from . import main
 
@@ -21,11 +22,11 @@ def verify_user(username, password):
 
 
 @main.route('/')
-@main.route('/index')
+@main.route('/index/')
 def index():
     if current_user.is_authenticated:
         pass
-    return render_template('index.html', user=None)
+    return render_template('index.html')
 
 
 @main.route('/favicon.ico')
@@ -49,7 +50,7 @@ def login():
         u = verify_user(username, password)
         if u:
             login_user(u, remember=form.remember.data)
-            return redirect(request.args.get('next') or url_for('main.index', user=u))
+            return redirect(request.args.get('next') or url_for('main.index'))
         else:
             return json.dumps({'code': 2, 'msg': 'Username/Password Error'})
     return render_template("login.html", form=form)
