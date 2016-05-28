@@ -4,8 +4,9 @@
 
 {% block body %}
     <form action="/journal/import/" method="post" enctype="multipart/form-data">
-        <p><input type="file" name="file">
-            <input type="submit" value="Upload">
+        <progress id="uploadprogress" min="0" max="100" value="0">0</progress>
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
     </form>
 {% endblock %}
 

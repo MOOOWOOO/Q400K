@@ -11,30 +11,34 @@
             <thead>
             <tr>
                 <td>id</td>
-                <td>datetime</td>
                 <td>level</td>
                 <td>title</td>
                 <td>detail</td>
+                <td>datetime</td>
                 <td>action</td>
             </tr>
             </thead>
             <tbody id="journal_tbody">
             {% for record in journals %}
                 <tr id="{{ record.id }}" class="{{ ["danger", "warning", "success", "info", "active"][record.level] }}">
-                    <td>{{ record.id }}</td>
-                    <td>{{ record.level }}</td>
-                    <td>{{ record.title }}</td>
-                    <td>{{ record.detail }}</td>
-                    <td>{{ record.datetime }}</td>
+                    <td id="id_{{ record.id }}">{{ record.id }}</td>
+                    <td id="level_{{ record.id }}">{{ record.level }}</td>
+                    <td id="title_{{ record.id }}">{{ record.title }}</td>
+                    <td id="detail_{{ record.id }}">{{ record.detail }}</td>
+                    <td id="datetime_{{ record.id }}">{{ record.datetime }}</td>
                     <td>
                         <a style="display:block;cursor:hand" href="#">
-                            <span class="fa fa-pencil-square-o"></span>
+                            <span class="fa fa-pencil-square-o" id="edit_{{ record.id }}"
+                                  data-target="{{ record.id }}"></span>
                         </a>
                         <a style="display:block;cursor:hand" href="#">
-                            <span class="fa fa-trash" data-target="{{ record.id }}"></span>
+                            <span class="fa fa-trash" id="delete_{{ record.id }}" data-target="{{ record.id }}"></span>
                         </a>
                         <a style="display: none;cursor:hand" href="#">
-                            <span class="fa fa-floppy-o" data-target="{{ record.id }}"></span>
+                            <span class="fa fa-floppy-o" id="save_{{ record.id }}" data-target="{{ record.id }}"></span>
+                        </a>
+                        <a style="display: none;cursor:hand" href="#">
+                            <span class="fa fa-remove" id="cancel_{{ record.id }}" data-target="{{ record.id }}"></span>
                         </a>
                     </td>
                 </tr>
