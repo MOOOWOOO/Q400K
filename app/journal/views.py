@@ -2,16 +2,14 @@
 from datetime import datetime
 from math import ceil
 
-import os
+from flask import render_template, request, jsonify, url_for, redirect
+
 from app import db
-from app.config import config
 from app.main.decorator import login_required_
 from app.main.views import verify_user
 from app.util.file_manager import upload
-from flask import render_template, request, jsonify, url_for, redirect
 from flask.ext.login import current_user
 from sqlalchemy import desc
-from werkzeug.utils import secure_filename
 from . import journal
 from .models import Journal
 
@@ -26,6 +24,21 @@ def list(page=1):
     journal_pages = int(ceil(journal_db.count() / 50.0))
     journal_list = journal_db.filter_by(visable=True).order_by(desc(Journal.id)).offset(50 * (page - 1)).limit(50).all()
     return render_template('journal/list.html', journals=journal_list, number=page, total=journal_pages)
+
+
+@journal.route("/get/<int:id>/")
+@login_required_
+def get_by_id(id):
+    journal_db = Journal.query
+    journal_record = journal_db.filter_by(id=id, visable=True).first()
+    journal_record = {
+        'id'      : str(journal_record.id),
+        'level'   : str(journal_record.level),
+        'detail'  : str(journal_record.detail),
+        'title'   : str(journal_record.title),
+        'datetime': str(journal_record.datetime)
+    }
+    return jsonify({"journal": journal_record})
 
 
 @journal.route('/search/', methods=['POST'])
@@ -45,10 +58,10 @@ def new_record():
                           datetime=datetime.now())
     if new_journal.save():
         new_journal = {
-            'id': str(new_journal.id),
-            'level': str(new_journal.level),
-            'detail': str(new_journal.detail),
-            'title': str(new_journal.title),
+            'id'      : str(new_journal.id),
+            'level'   : str(new_journal.level),
+            'detail'  : str(new_journal.detail),
+            'title'   : str(new_journal.title),
             'datetime': str(new_journal.datetime)
         }
         return jsonify({'result': 'ok', 'journal': new_journal})
@@ -78,14 +91,13 @@ def reset(password):
         return redirect(url_for('.list', page=1))
 
 
-
 @journal.route('/import/', methods=['GET', 'POST'])
 @login_required_
 def import_file():
     if request.method == 'GET':
         return render_template('journal/import.html')
     else:
-        file_size=upload(request.files['file'])
+        file_size = upload(request.files['file'])
         if file_size == 0:
             pass
         else:
