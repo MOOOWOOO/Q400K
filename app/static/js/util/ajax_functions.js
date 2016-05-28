@@ -1,28 +1,48 @@
 /**
  * Created by jux on 16-5-11.
  */
-function query(method, url, param_list, successCallback, errorCallback) {
-    method = method.toLowerCase();
+function post(url, param_list, successCallback, errorCallback) {
     url = $.trim(url);
-    if ((method != "get" && method != "post") || url.length == 0) {
+    if (url.length == 0) {
     }
     else {
         $.ajax({
-            type: method,
-            url: url,
+            type       : "post",
+            url        : url,
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(param_list),
-            dataType: "json",
-            success: function (data) {
-                if (typeof data == "string"){
-                    data=JSON.parse(data);
+            data       : JSON.stringify(param_list),
+            dataType   : "json",
+            success    : function (data) {
+                if (typeof data == "string") {
+                    data = JSON.parse(data);
                 }
                 successCallback(data);
             },
-            error: function (data) {
+            error      : function (data) {
                 errorCallback(data);
             }
         });
     }
 }
 
+function get(url, successCallback, errorCallback) {
+    url = $.trim(url);
+    if (url.length == 0) {
+    }
+    else {
+        $.ajax({
+            type       : "get",
+            url        : url,
+            contentType: "application/json; charset=utf-8",
+            success    : function (data) {
+                if (typeof data == "string") {
+                    data = JSON.parse(data);
+                }
+                successCallback(data);
+            },
+            error      : function (data) {
+                errorCallback(data);
+            }
+        });
+    }
+}
