@@ -1,7 +1,8 @@
 # coding: utf-8
-import json
 
-from flask import render_template, request, redirect, url_for, send_from_directory
+from datetime import datetime as dt
+
+from flask import render_template, request, redirect, url_for, send_from_directory, session, jsonify
 
 from app import db
 from app.main.decorator import login_required_
@@ -47,12 +48,32 @@ def login():
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
-        u = verify_user(username, password)
-        if u:
-            login_user(u, remember=form.remember.data)
-            return redirect(request.args.get('next') or url_for('main.index'))
+
+        if username not in session:
+            session[username] = {'pe_count': 0, 'pe_lasttime': None}
+        _su = session[username]
+
+        if _su['pe_count'] >= 5:
+            lock_delay = (dt.now() - _su['pe_lasttime']).seconds/60
+            if lock_delay < 5:
+                return jsonify({'code': 2, 'msg':
+                    'please retry after {0} minutes'.format(lock_delay)})
+
+            else:
+                _su['pe_count'] = 0
+
         else:
-            return json.dumps({'code': 2, 'msg': 'Username/Password Error'})
+            u = verify_user(username, password)
+            if u:
+                _su['pe_count'] = 0
+                login_user(u, remember=form.remember.data)
+                return redirect(request.args.get('next') or url_for('main.index'))
+
+            else:
+                _su['pe_count'] += 1
+                _su['pe_lasttime'] = dt.now()
+                return jsonify({'code': 2, 'msg': 'Username/Password Error'})
+
     return render_template("login.html", form=form)
 
 
