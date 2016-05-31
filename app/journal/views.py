@@ -9,6 +9,7 @@ from app.main.decorator import login_required_
 from app.main.views import verify_user
 from app.util.file_manager import upload
 from flask.ext.login import current_user
+from os.path import getsize
 from sqlalchemy import desc
 from . import journal
 from .models import Journal
@@ -96,14 +97,48 @@ def reset(password):
 def import_file():
     if request.method == 'GET':
         return render_template('journal/import.html')
+
     else:
-        file_size = upload(request.files['file'])
+        file_path = upload(request.files['upload'])
+        file_size = getsize(file_path)
         if file_size == 0:
-            pass
+            return jsonify({'result': 'empty file'})
+
         else:
-            if float(file_size / 1000000) > 100:
-                # todo: import backround
-                pass
+            if do_import(file_path=file_path, file_size=file_size):
+                return jsonify({'result': 'ok'})
             else:
-                # todo: import and return
-                pass
+                return jsonify({'result': 'import error'})
+
+
+def do_import(file_path, file_size):
+    try:
+        with open(file_path, 'r') as f:
+            large_file = float(file_size / 1000000) > 100
+            record_list = list()
+
+            for line in f:
+                param = line.split(' | ')
+                new_record = Journal(level=param[0],
+                                     title=param[1],
+                                     detail=param[2],
+                                     datetime=param[3])
+                record_list.append(new_record)
+
+                if large_file:
+                    if len(record_list) > 10000:
+                        db.session.add_all(record_list)
+                        db.commit()
+                        record_list = list()
+
+                else:
+                    pass
+
+        if len(record_list) > 0:
+            db.session.add_all(record_list)
+            db.commit()
+
+        return True
+
+    except Exception as e:
+        return False

@@ -3,14 +3,14 @@
 {% block title %} Import Journals File {% endblock %}
 
 {% block body %}
-    <form action="/journal/import/" method="post" enctype="multipart/form-data">
-        <progress id="uploadprogress" min="0" max="100" value="0">0</progress>
-        <input type="file" name="file">
+    <form id="upload-form" action="/journal/import/" method="post" enctype="multipart/form-data">
+        <p>Upload progress:<progress id="uploadprogress" min="0" max="100" value="0">0</progress></p>
+        <input id="upload" type="file" name="upload">
         <input type="submit" value="Upload">
     </form>
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
-    <script type="application/javascript" src="{{ url_for("static", filename="js/app/journal.js") }}"></script>
+    <script type="application/javascript" src="{{ url_for("static", filename="js/app/journal_import.js") }}"></script>
 {% endblock %}
