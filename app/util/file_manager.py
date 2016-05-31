@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask import current_app
-from os.path import join, getsize
+from os.path import join
 from werkzeug.utils import secure_filename
 
 __author__ = 'Jux.Liu'
@@ -19,6 +19,6 @@ def upload(request_file):
         filename = secure_filename(f.filename)
         file_path=join(current_app.config['UPLOAD_PATH'], filename)
         f.save(file_path)
-        return getsize(file_path)
+        return file_path
     else:
         return 0
