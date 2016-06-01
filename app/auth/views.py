@@ -5,9 +5,9 @@ from flask import render_template, request, redirect, url_for, session, jsonify
 
 from app import db
 from app.user.models import User
+from app.util.decorators import login_required_
 from flask.ext.login import current_user, logout_user, login_user
 from . import auth
-from .decorator import login_required_
 from .models import LoginForm, RegistForm, ChangePasswordForm
 
 __author__ = 'Jux.Liu'

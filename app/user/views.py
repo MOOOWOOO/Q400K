@@ -1,7 +1,7 @@
 # coding: utf-8
 from flask import render_template
 
-from app.auth.decorator import login_required_
+from app.util.decorators import login_required_
 from . import user
 from .models import User, UserDetail
 
