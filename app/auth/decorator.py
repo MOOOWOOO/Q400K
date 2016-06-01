@@ -2,6 +2,7 @@
 from functools import wraps
 
 from flask import current_app, redirect, url_for, request
+
 from flask.ext.login import current_user
 
 __author__ = 'Jux.Liu'

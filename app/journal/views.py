@@ -5,8 +5,8 @@ from math import ceil
 from flask import render_template, request, jsonify, url_for, redirect
 
 from app import db
-from app.main.decorator import login_required_
-from app.main.views import verify_user
+from app.auth.decorator import login_required_
+from app.auth.views import verify_user
 from app.util.file_manager import upload
 from flask.ext.login import current_user
 from os.path import getsize
