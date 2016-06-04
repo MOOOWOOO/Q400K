@@ -87,4 +87,4 @@ def change_password():
             db.session.add(current_user)
             db.session.commit()
             return redirect(url_for('.logout'))
-    return render_template('user_pages/change_password.html', form=form)
+    return render_template('user/change_password.html', form=form)
