@@ -1,0 +1,89 @@
+{% extends "index.html" %}
+
+{% block title %}User List - {{ number }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% import  "utils/pagenation.html" as p %}
+        {{ p.pager("user.list",number=number,total=total) }}
+        <table class="table table-bordered table-hover table-condensed table-responsive">
+            <thead>
+            <tr>
+                <td>id</td>
+                <td>level</td>
+                <td>title</td>
+                <td>detail</td>
+                <td>datetime</td>
+                <td>action</td>
+            </tr>
+            </thead>
+            <tbody id="journal_tbody">
+            {% for record in journals %}
+                <tr id="{{ record.id }}" class="{{ ["danger", "warning", "success", "info", "active"][record.level] }}">
+                    <td id="id_{{ record.id }}">{{ record.id }}</td>
+                    <td id="level_{{ record.id }}">{{ record.level }}</td>
+                    <td id="title_{{ record.id }}">{{ record.title }}</td>
+                    <td id="detail_{{ record.id }}">{{ record.detail }}</td>
+                    <td id="datetime_{{ record.id }}">{{ record.datetime }}</td>
+                    <td>
+                        <a style="display:block;cursor:hand" href="#">
+                            <span class="fa fa-pencil-square-o" id="edit_{{ record.id }}"
+                                  data-target="{{ record.id }}"></span>
+                        </a>
+                        <a style="display:block;cursor:hand" href="#">
+                            <span class="fa fa-trash" id="delete_{{ record.id }}" data-target="{{ record.id }}"></span>
+                        </a>
+                        <a style="display: none;cursor:hand" href="#">
+                            <span class="fa fa-floppy-o" id="save_{{ record.id }}" data-target="{{ record.id }}"></span>
+                        </a>
+                        <a style="display: none;cursor:hand" href="#">
+                            <span class="fa fa-remove" id="cancel_{{ record.id }}" data-target="{{ record.id }}"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr id="new_journal_tr">
+                <td>
+                    <div class="btn-group">
+                        <button id="new_journal" type="button" class="btn btn-default" style="display: block;">
+                            <span class="fa fa-plus"></span>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    {# todo: dropdown always fail #}
+                </td>
+                <td>
+                    <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" class="form-control" id="new_title" placeholder="Title"
+                               style="display: none;">
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" class="form-control" id="new_detail" placeholder="Detail"
+                               style="display: none;">
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button id="save_journal" type="button" class="btn btn-primary" style="display: none;">
+                            <span class="fa fa-check"></span>
+                        </button>
+                        <button id="cancel_journal" type="button" class="btn btn-danger" style="display: none;">
+                            <span class="fa fa-times"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        {{ p.pager("journal.list",number=number,total=total) }}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="application/javascript" src="{{ url_for("static", filename="js/app/user_list.js") }}"></script>
+{% endblock %}
