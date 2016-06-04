@@ -19,7 +19,7 @@ class User(db.Model, UserMixin, CRUDMixin):
     role_id = db.Column(db.Integer, nullable=False, default=2)
 
     def __repr__(self):
-        return '<User #{0}: {1}, email: {2}, role #{3}>'.format(self.id, self.username, self.email, self.role_id)
+        return '<User #{0}>'.format(self.id)
 
     @property
     def password(self):
