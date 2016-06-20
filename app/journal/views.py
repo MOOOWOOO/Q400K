@@ -6,7 +6,7 @@ from flask import render_template, request, jsonify, url_for, redirect
 
 from app import db
 from app.auth.views import verify_user
-from app.util.decorators import login_required_
+from app.util.decorators import login_required_, root_required
 from app.util.file_manager import upload
 from flask.ext.login import current_user
 from os.path import getsize
@@ -93,7 +93,7 @@ def reset(password):
 
 
 @journal.route('/import/', methods=['GET', 'POST'])
-@login_required_
+@root_required
 def import_file():
     if request.method == 'GET':
         return render_template('journal/import.html')

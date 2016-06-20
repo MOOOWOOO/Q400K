@@ -20,7 +20,7 @@ def login_required_(func):
         if current_app.login_manager._login_disabled:
             return func(*args, **kwargs)
         elif not current_user.is_authenticated:
-            return redirect(url_for("main.login", next=request.url))
+            return redirect(url_for("auth.login", next=request.url))
         return func(*args, **kwargs)
 
     return decorated_view
