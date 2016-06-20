@@ -6,11 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{% endblock %} - Q400K</title>
     {% endblock %}
-    {% block scripts %}
-        <script type="application/javascript" src="{{ url_for("static", filename="thirdLib/jquery.js") }}"></script>
-        <script type="application/javascript"
-                src="{{ url_for("static", filename="js/util/ajax_functions.js") }}"></script>
-        <script type="application/javascript" src="{{ url_for("static", filename="js/util/animations.js") }}"></script>
+    {% block style %}
         <link rel="stylesheet" type="text/css"
               href="{{ url_for("static", filename="thirdLib/bootstrap/css/bootstrap.min.css") }}">
         <link rel="stylesheet" type="text/css"
@@ -32,6 +28,13 @@
 {% endblock %}
 
 {% block body %}
+{% endblock %}
+
+{% block script %}
+    <script type="application/javascript" src="{{ url_for("static", filename="thirdLib/jquery.js") }}"></script>
+    <script type="application/javascript"
+            src="{{ url_for("static", filename="js/util/ajax_functions.js") }}"></script>
+    <script type="application/javascript" src="{{ url_for("static", filename="js/util/animations.js") }}"></script>
 {% endblock %}
 
 </body>
